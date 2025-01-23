@@ -1,0 +1,5 @@
+# Ignore all log files in the reports directory
+/reports/*
+/x-llm-reports/*
+node_modules
+.env

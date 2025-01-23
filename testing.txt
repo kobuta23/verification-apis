@@ -1,0 +1,13 @@
+context = "The post is about $FLUID, the 0xFluid token."
+
+positive Example: 
+https://x.com/litocoen/status/1864065160471851288 
+
+negative Example:
+https://x.com/nonstopTheo/status/1874155274308829631
+
+unclear Example:
+https://x.com/0xfluid/status/1864009746988372448
+
+not pertinent Example:
+https://x.com/PageOf_History/status/1874444656907567246
