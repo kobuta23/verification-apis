@@ -12,7 +12,7 @@ import {
   gnosis, 
   mainnet 
 } from 'viem/chains';
-import { chains } from './chainConfig.js';
+import { chains } from './chainConfig';
 
 export const getPublicClient = (chainId: number) => {
     const chainName = chains[chainId];

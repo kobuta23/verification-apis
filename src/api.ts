@@ -1,10 +1,10 @@
 import 'dotenv/config'; // Add this at the top
 import express from 'express';
-import { analyzeTweet } from './services/sentimentAnalyzer.js';
-import { getTweetId, fetchTweet } from './services/twitterService.js';
-import { getPublicClient } from './getPublicClient.js';
-import { getSubgraphEndpoint } from './chainConfig.js';
-import { chains } from './chainConfig.js';
+import { analyzeTweet } from './services/sentimentAnalyzer';
+import { getTweetId, fetchTweet } from './services/twitterService';
+import { getPublicClient } from './getPublicClient';
+import { getSubgraphEndpoint } from './chainConfig';
+import { chains } from './chainConfig';
 import axios from 'axios';
 const app = express();
 app.use(express.json());

@@ -1,7 +1,7 @@
 import { Rettiwt } from 'rettiwt-api';
 import { OpenAI } from 'openai';
 import dotenv from 'dotenv';
-import { TweetResult } from './twitterService.js';
+import { TweetResult } from './twitterService';
 
 // Load environment variables from .env file
 dotenv.config();
