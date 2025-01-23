@@ -108,7 +108,10 @@ app.post('/check-sender-streams', async(req: any, res: any) => {
   }
 });
 
-
+// test get endpoint
+app.get('/test', async (req: any, res: any) => {
+  res.json({ message: 'Hello, world!' });
+});
 
 
 const PORT = process.env.PORT || 5555;
