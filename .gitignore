@@ -3,3 +3,4 @@
 /x-llm-reports/*
 node_modules
 .env
+/dist
