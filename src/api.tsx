@@ -1,10 +1,10 @@
 import 'dotenv/config'; // Add this at the top
 import express from 'express';
-import { analyzeTweet } from './services/sentimentAnalyzer.tsx';
+import { analyzeTweet } from './services/sentimentAnalyzer.js';
 import { getTweetId, fetchTweet } from './services/twitterService.js';
-import { getPublicClient } from './getPublicClient.tsx';
-import { getSubgraphEndpoint } from './chainConfig.ts';
-import { chains } from './chainConfig.ts';
+import { getPublicClient } from './getPublicClient.js';
+import { getSubgraphEndpoint } from './chainConfig.js';
+import { chains } from './chainConfig.js';
 import axios from 'axios';
 const app = express();
 app.use(express.json());
@@ -49,7 +49,6 @@ app.post('/check-sender-streams', async(req: any, res: any) => {
   console.log(req.body);
   try {
     const { chainString, sender } = req.body;
-    console.log("fuckkk uuuuuu")
     console.log(chainString, sender);
     // Check if chainString exists
     if (!chainString) {

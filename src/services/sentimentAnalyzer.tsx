@@ -1,17 +1,13 @@
 import { Rettiwt } from 'rettiwt-api';
 import { OpenAI } from 'openai';
 import dotenv from 'dotenv';
-import { TweetResult } from './twitterService';
+import { TweetResult } from './twitterService.js';
 
 // Load environment variables from .env file
 dotenv.config();
 
 // Types
-type SentimentResult = {
-  text: string;
-  sentiment: 'positive' | 'negative' | 'unclear' | 'irrelevant';
-  author: any;
-};
+type SentimentResult = 'positive' | 'negative' | 'unclear' | 'irrelevant';
 
 // Extract tweet ID from URL
 export const getTweetId = (url: string): string => {
@@ -28,7 +24,7 @@ const openai = new OpenAI({
   apiKey: OPENAI_KEY,
 });
 
-export const analyzeTweet = async (tweet: TweetResult, context:string): Promise<'positive' | 'negative' | 'unclear' | 'irrelevant'> => {
+export const analyzeTweet = async (tweet: TweetResult, context:string): Promise<SentimentResult> => {
   const { text, author } = tweet;
   console.log(OPENAI_KEY);
   const response = await openai.chat.completions.create({
@@ -48,21 +44,21 @@ export const analyzeTweet = async (tweet: TweetResult, context:string): Promise<
         - If the tweet is clearly about a different topic, respond immediately with "irrelevant"
         - If there are keywords or phrases from the context present in the text, continue with sentiment analysis.
 
-2. For sentiment analysis:
-   - Reply "positive" ONLY if the text expresses clear, unambiguous positive sentiment
-   - Reply "negative" ONLY if the text expresses clear, unambiguous negative sentiment
-   - Reply "unclear" for ANY of these cases:
-     * Mixed sentiments
-     * Neutral statements
-     * Factual statements (the text does not express any opinion)
-     * Ambiguous meaning
-     * Sarcasm or irony
-     * Any doubt about the true sentiment
-     * However, if you are sure that the text is not related to the context, reply "irrelevant"
-     * Unclear sentiment from words like "yet", "not even", "not yet", "not even yet", etc.
+        2. For sentiment analysis:
+           - Reply "positive" ONLY if the text expresses clear, unambiguous positive sentiment
+           - Reply "negative" ONLY if the text expresses clear, unambiguous negative sentiment
+           - Reply "unclear" for ANY of these cases:
+             * Mixed sentiments
+             * Neutral statements
+             * Factual statements (the text does not express any opinion)
+             * Ambiguous meaning
+             * Sarcasm or irony
+             * Any doubt about the true sentiment
+             * However, if you are sure that the text is not related to the context, reply "irrelevant"
+             * Unclear sentiment from words like "yet", "not even", "not yet", "not even yet", etc.
 
-Respond with one word: "positive", "negative", "unclear", or "irrelevant".
-`
+        Respond with one word: "positive", "negative", "unclear", or "irrelevant".
+        `
       },
       {
         role: 'user',
@@ -76,7 +72,7 @@ Respond with one word: "positive", "negative", "unclear", or "irrelevant".
   const sentiment = response.choices[0].message.content?.toLowerCase().trim();
   console.log(response.choices[0].message);
   
-  if (sentiment === 'positive' || sentiment === 'negative' || sentiment === 'unclear' || sentiment == 'irrelevant') {
+  if (sentiment === 'positive' || sentiment === 'negative' || sentiment === 'unclear' || sentiment === 'irrelevant') {
     return sentiment;
   }
   return 'unclear';
