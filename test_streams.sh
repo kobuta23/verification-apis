@@ -1,5 +1,9 @@
 #!/bin/bash
 
+REMOTE=${REMOTE:-"http://localhost:5555"}
+
+echo "Using remote: $REMOTE"
+
 # Define the sender address and chain
 SENDER="0xE2Ed962948005AB01F2cEfE8326a0730B7D268af" 
 CHAIN="optimism-mainnet (10)"
@@ -13,7 +17,7 @@ mkdir -p reports
 
 # Check if server is running with verbose output
 echo "Testing server connection..." | tee -a "$LOG_FILE"
-curl -v "http://localhost:5555" 2>&1 | tee -a "$LOG_FILE"
+curl -v "$REMOTE" 2>&1 | tee -a "$LOG_FILE"
 
 echo "Starting stream check at $(date)" | tee -a "$LOG_FILE"
 echo "----------------------------------------" | tee -a "$LOG_FILE"
@@ -24,7 +28,7 @@ echo "Checking streams for address: $SENDER on $CHAIN" | tee -a "$LOG_FILE"
 response=$(curl -v -X POST \
     -H "Content-Type: application/json" \
     -d "{\"chainString\": \"$CHAIN\", \"sender\": \"$SENDER\"}" \
-    http://localhost:5555/check-sender-streams 2>&1)
+    "$REMOTE/check-sender-streams" 2>&1)
 
 # Capture the exit code
 curl_exit_code=$?

@@ -97,7 +97,7 @@ app.post('/check-sender-streams', async(req: any, res: any) => {
     }).then(res => res.json());
     console.log(response.data);
     let p = "Streaming: \n";
-    response.data.data.streams.forEach((stream: any) => {
+    response.data.streams.forEach((stream: any) => {
       p+=
       ` ${(Number(stream.currentFlowRate) * 86400/1e18).toFixed(4).toString()} ${stream.token.symbol} per day to ${stream.receiver.id}\n`
     });
