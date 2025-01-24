@@ -3,4 +3,5 @@
 /x-llm-reports/*
 node_modules
 .env
+.env.prod
 /dist

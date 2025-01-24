@@ -1,5 +1,7 @@
 #!/bin/bash
 
+REMOTE=${REMOTE:-"http://localhost:5555"}
+
 # Define the context
 # CONTEXT="The post is about \$FLUID, the 0xFluid token."
 CONTEXT="The tweet is about $HYPE or contains the word $HYPE, which is the HyperLiquid token. The tweet is expressing an opinion specifically about the token itself. It isn't relevant if it's about HyperLiquid but not the token itself"
@@ -22,8 +24,8 @@ TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 LOG_FILE="reports/tweet_analysis_${TIMESTAMP}.log"
 
 # Check if server is running
-if ! curl -s "http://localhost:3000" > /dev/null; then
-    echo "Error: Server is not running on localhost:3000" | tee -a "$LOG_FILE"
+if ! curl -s "$REMOTE" > /dev/null; then
+    echo "Error: Server is not running on $REMOTE" | tee -a "$LOG_FILE"
     exit 1
 fi
 
@@ -38,7 +40,7 @@ for tweet in "${TWEETS[@]}"; do
     response=$(curl -s -w "\n%{http_code}" -X POST \
         -H "Content-Type: application/json" \
         -d "{\"url\": \"$tweet\", \"context\": \"$CONTEXT\"}" \
-        http://localhost:3000/analyze-sentiment)
+        "$REMOTE/analyze-sentiment")
     
     echo "$response" | tee -a "$LOG_FILE"
     
